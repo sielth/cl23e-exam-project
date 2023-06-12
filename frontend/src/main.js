@@ -8,6 +8,9 @@ const config = {
   development: {
     api: 'http://localhost:3000',
   },
+  production: {
+    api: 'http://localhost:3000',
+  }
 };
 
 createApp(App)

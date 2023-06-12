@@ -1,0 +1,56 @@
+version: '3.1'
+
+services:
+  db:
+    image: mariadb:latest
+    # restart: always
+    environment:
+      MARIADB_DATABASE: zay_prod
+      MARIADB_USER: zay_prod
+      MARIADB_PASSWORD: /run/secrets/db_dba_password
+      MARIADB_ROOT_PASSWORD: /run/secrets/db_root_password
+    ports:
+      - 3306:3306
+    secrets:
+      - db_root_password
+      - db_dba_password
+    volumes:
+      - db:/var/lib/mariadb
+
+  cl-exam-backend-prod:
+    image: cl-exam-backend-prod
+    # restart: always
+    ports:
+      - 3000:3000
+    # healthcheck:
+    #   test: curl --fail http://localhost:3000/status || exit 1
+    #   interval: 10s
+    #   timeout: 10s
+    #   retries: 10
+    command: sh -c "npm run db:migrate && npm start"
+    environment:
+      PORT: 3000
+      NODE_ENV: production
+      DB_HOSTNAME: db
+      DB_USERNAME: zay_prod
+      DB_DATABASE: zay_prod
+      DB_PASSWORD: /run/secrets/db_dba_password
+    secrets:
+      - db_dba_password
+    depends_on: 
+      -  db
+
+  cl-exam-frontend-prod:
+    image: cl-exam-frontend-prod
+    restart: always
+    ports:
+      - 8000:4173
+
+secrets:
+  db_dba_password:
+    external: true
+  db_root_password:
+    external: true
+
+volumes:
+  db:

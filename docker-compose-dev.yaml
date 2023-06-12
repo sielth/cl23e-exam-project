@@ -1,0 +1,42 @@
+version: '3.1'
+
+services:
+  db:
+    image: mariadb:latest
+    # restart: always
+    environment:
+      MARIADB_DATABASE: zay_dev
+      MARIADB_ROOT_PASSWORD: root
+    ports:
+      - 3306:3306
+    volumes:
+      - db:/var/lib/mariadb
+
+  cl-exam-backend:
+    image: cl-exam-backend
+    # restart: always
+    ports:
+      - 3000:3000
+    healthcheck:
+      test: curl --fail http://localhost:3000/status || exit 1
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    command: sh -c "npm run db:migrate && npm run db:seed && npm run dev"
+    environment:
+      PORT: 3000
+      DB_HOSTNAME: db
+      DB_USERNAME: root
+      DB_DATABASE: zay_dev
+      DB_PASSWORD: root
+    depends_on: 
+      -  db
+
+  cl-exam-frontend:
+    image: cl-exam-frontend
+    restart: always
+    ports:
+      - 8000:8000
+
+volumes:
+  db:
