@@ -17,7 +17,7 @@ import BrandCarousel from '@/components/BrandCarousel.vue';
             </p>
           </div>
           <div class="col-md-4">
-            <img src="assets/img/about-hero.svg" alt="About Hero">
+            <img src="/assets/img/about-hero.svg" alt="About Hero">
           </div>
         </div>
       </div>
