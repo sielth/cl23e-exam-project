@@ -18,12 +18,12 @@ services:
       - db:/var/lib/mariadb
 
   cl-exam-backend-prod:
-    image: cl-exam-backend-prod
+    image: alessiacontenti/cl-exam-backend-prod
     # restart: always
     ports:
       - 3000:3000
     # healthcheck:
-    #   test: curl --fail http://localhost:3000/status || exit 1
+    #   test: curl --fail http://cl-exam-backend-prod:3000/status || exit 1
     #   interval: 10s
     #   timeout: 10s
     #   retries: 10
@@ -41,7 +41,7 @@ services:
       -  db
 
   cl-exam-frontend-prod:
-    image: cl-exam-frontend-prod
+    image: alessiacontenti/cl-exam-frontend-prod
     restart: always
     ports:
       - 8000:4173
