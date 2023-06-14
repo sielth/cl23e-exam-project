@@ -9,7 +9,7 @@ const config = {
     api: 'http://localhost:3000',
   },
   production: {
-    api: 'http://cl-exam-backend-prod:3000',
+    api: 'http://localhost:3000',
   }
 };
 

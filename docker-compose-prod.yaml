@@ -44,7 +44,7 @@ services:
     image: alessiacontenti/cl-exam-frontend-prod
     restart: always
     ports:
-      - 8000:4173
+      - 8000:8000
 
 secrets:
   db_dba_password:
