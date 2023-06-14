@@ -13,15 +13,15 @@ services:
       - db:/var/lib/mariadb
 
   cl-exam-backend:
-    image: cl-exam-backend
-    # restart: always
+    image: cl-exam-backend-dev
+    restart: always
     ports:
       - 3000:3000
-    healthcheck:
-      test: curl --fail http://localhost:3000/status || exit 1
-      interval: 5s
-      timeout: 5s
-      retries: 5
+    # healthcheck:
+    #   test: curl --fail http://localhost:3000/status || exit 1
+    #   interval: 5s
+    #   timeout: 5s
+    #   retries: 5
     command: sh -c "npm run db:migrate && npm run db:seed && npm run dev"
     environment:
       PORT: 3000
@@ -33,7 +33,7 @@ services:
       -  db
 
   cl-exam-frontend:
-    image: cl-exam-frontend
+    image: cl-exam-frontend-dev
     restart: always
     ports:
       - 8000:8000

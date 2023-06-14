@@ -1,4 +1,8 @@
+# build stage
+
 FROM node:alpine
+
+RUN npm install -g http-server
 
 WORKDIR /app/frontend
 
@@ -12,4 +16,4 @@ RUN npm run build
 
 EXPOSE 8000
 
-CMD [ "npm", "run", "preview" ]
+CMD [ "http-server", "dist" ]
